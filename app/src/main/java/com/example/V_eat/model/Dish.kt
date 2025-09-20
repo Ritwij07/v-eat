@@ -1,5 +1,3 @@
-
-
 package com.example.V_eat.model
 
 data class Dish(
@@ -8,5 +6,6 @@ data class Dish(
     val priceZomato: Double? = null,
     val calories: Int? = null,
     val bestDeal: Boolean = false,
-    val savings: Double = 0.0
+    val savings: Double = 0.0,
+    val imageUrl: String? = null // Added imageUrl property
 )

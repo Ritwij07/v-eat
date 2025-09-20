@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.Alignment
 import coil.compose.AsyncImage
 import com.example.V_eat.model.Dish
 
@@ -23,11 +22,26 @@ fun DishCard(dish: Dish, onTrack: () -> Unit) {
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(12.dp)
+        ) {
+            // Load image using Coil (AsyncImage)
+            AsyncImage(
+                model = dish.imageUrl
+                    ?: "https://via.placeholder.com/300",  // Fallback URL if no image
+                contentDescription = dish.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(180.dp)
+            )
+
+            // Dish details
             Text(text = dish.name, style = MaterialTheme.typography.titleLarge)
             Spacer(Modifier.height(6.dp))
-            Text(text = "Swiggy: ${dish.priceSwiggy?.let { "₹$it" } ?: "-"}")
-            Text(text = "Zomato: ${dish.priceZomato?.let { "₹$it" } ?: "-"}")
+            Text(text = "Swiggy: ₹${dish.priceSwiggy?.let { it } ?: "-"}")
+            Text(text = "Zomato: ₹${dish.priceZomato?.let { it } ?: "-"}")
+
             if (dish.savings > 0.0) {
                 Text(
                     text = "💰 You save ₹${dish.savings}",
@@ -36,11 +50,11 @@ fun DishCard(dish: Dish, onTrack: () -> Unit) {
             }
             Text(text = "Calories: ${dish.calories ?: "?"} kcal")
             Spacer(Modifier.height(8.dp))
+
             Button(onClick = onTrack) {
                 Text("Add to Tracker")
             }
         }
+
     }
-
 }
-
